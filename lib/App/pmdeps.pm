@@ -202,6 +202,6 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-moznion E<lt>moznion@gmail.comE<gt>
+moznion C<< moznion@gmail.com >>
 
 =cut

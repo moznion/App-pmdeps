@@ -1,7 +1,7 @@
 {
    "abstract" : "It's new $module",
    "author" : [
-      "moznion <moznion@gmail.com>"
+      "moznion C<< moznion@gmail.com >>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.131490",
@@ -70,5 +70,8 @@
          "web" : "https://github.com/moznion/pm-deps"
       }
    },
-   "version" : "0.01"
+   "version" : "0.01",
+   "x_contributors" : [
+      "moznion <moznion@gmail.com>"
+   ]
 }
