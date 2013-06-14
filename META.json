@@ -4,7 +4,7 @@
       "moznion <moznion@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.4.6, CPAN::Meta::Converter version 2.131490",
+   "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.131490",
    "license" : [
       "perl_5"
    ],
@@ -42,6 +42,9 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
+            "Furl" : "2.16",
+            "Getopt::Long" : "0",
             "JSON" : "2.59",
             "Module::CoreList" : "0",
             "perl" : "5.008001"
@@ -49,6 +52,8 @@
       },
       "test" : {
          "requires" : {
+            "Capture::Tiny" : "0.22",
+            "Test::MockObject::Extends" : "1.20120301",
             "Test::More" : "0.98"
          }
       }
