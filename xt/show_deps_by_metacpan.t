@@ -11,7 +11,7 @@ use Test::More;
 subtest 'Plack version 1.0027' => sub {
     subtest 'with perl-5.008001' => sub {
         my ($got) = capture {
-            App::pmdeps->new->run( '--p', '5.008001', 'Plack', '1.0027' );
+            App::pmdeps->new->run( '-p', '5.008001', 'Plack', '1.0027' );
         };
 
         is $got, <<EOS;
@@ -55,7 +55,7 @@ EOS
 
     subtest 'with perl-5.016003' => sub {
         my ($got) = capture {
-            App::pmdeps->new->run( '--p', '5.016003', 'Plack', '1.0027' );
+            App::pmdeps->new->run( '-p', '5.016003', 'Plack', '1.0027' );
         };
 
         is $got, <<EOS;
@@ -100,7 +100,7 @@ EOS
 
 subtest 'Plack version 1.0000' => sub {
     my ($got) = capture {
-        App::pmdeps->new->run( '--p', '5.008001', 'Plack', '1.0000' );
+        App::pmdeps->new->run( '-p', '5.008001', 'Plack', '1.0000' );
     };
 
     is $got, <<EOS;
