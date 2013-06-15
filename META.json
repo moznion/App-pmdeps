@@ -4,7 +4,7 @@
       "moznion C<< moznion@gmail.com >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.131490",
+   "generated_by" : "Minilla/v0.5.3, CPAN::Meta::Converter version 2.131560",
    "license" : [
       "perl_5"
    ],
@@ -44,9 +44,9 @@
          "requires" : {
             "Carp" : "0",
             "Furl" : "2.16",
-            "Getopt::Long" : "0",
+            "Getopt::Long" : "2.39",
             "JSON" : "2.59",
-            "Module::CoreList" : "0",
+            "Module::CoreList" : "2.91",
             "perl" : "5.008001"
          }
       },
