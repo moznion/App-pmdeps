@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use utf8;
 use Carp;
+use File::Spec::Functions qw/catfile rel2abs/;
 use Furl;
 use Getopt::Long qw/:config posix_default no_ignore_case bundling auto_help/;
 use JSON;
@@ -26,10 +27,12 @@ sub run {
         'p|perl-version=f' => \$self->{perl_version},
         'h|help!'          => \$self->{usage},
         'v|version'        => \$self->{version},
+        'l|local!',        => \$self->{local},
     ) or $self->show_usage;
 
     $self->show_version if $self->{version};
     $self->show_usage   if $self->{usage};
+
     $self->show_short_usage unless @ARGV;
 
     $self->{perl_version} ||= $];
@@ -38,7 +41,13 @@ sub run {
 
 sub show_dependencies {
     my ( $self, @args ) = @_;
-    my $deps = $self->_fetch_deps_from_metacpan( { name => $args[0], version => $args[1] } );
+
+    my $deps;
+    if ($self->{local}) {
+        $deps = $self->_fetch_deps_from_metadata($args[0]);
+    } else {
+        $deps = $self->_fetch_deps_from_metacpan( { name => $args[0], version => $args[1] } );
+    }
     my ($cores, $non_cores) = $self->_divide_core_or_not($deps);
     $self->_spew($cores, $non_cores);
 }
@@ -106,10 +115,41 @@ sub _fetch_deps_from_metacpan {
         }
 EOQ
 
-    use Data::Dumper; warn Dumper($res); # TODO remove
-
     my $content = decode_json( $res->{content} );
     return $content->{hits}->{hits}[0]->{fields}->{dependency};
+}
+
+sub _fetch_deps_from_metadata {
+    my ( $self, $path ) = @_;
+
+    $path = rel2abs($path);
+
+    my $meta_json_file   = catfile( $path, 'META.json' );
+    my $mymeta_json_file = catfile( $path, 'MYMETA.json' );
+
+    my $using_json_file;
+    $using_json_file = $mymeta_json_file if -e $mymeta_json_file;
+    $using_json_file = $meta_json_file   if -e $meta_json_file; # <= High priority
+
+    unless ($using_json_file) {
+        croak '[ERROR] META.json or MYMETA.json is not found.';
+    }
+
+    local $/;
+    open my $fh, '<', $using_json_file;
+    my $json = decode_json(<$fh>);
+    close $fh;
+
+    # FIXME it's poor!
+    my @requires;
+    for my $prereq (values $json->{prereqs}) {
+        for my $modules (values $prereq) {
+            for my $require (keys $modules) {
+                push @requires, { module => $require };
+            }
+        }
+    }
+    return \@requires;
 }
 
 sub _divide_core_or_not {
@@ -156,6 +196,7 @@ Usage:
     pm-deps [options] Module [module_version]
 
     options:
+        -l,--local          TBD
         -p,--perl-version   Set target perl version (default: perl version which you are using)
         -t,--timeout        Set seconds of the threshold for timeout (This application attempts to connect to metacpan)
         -h,--help           Show help messages. It's me!
