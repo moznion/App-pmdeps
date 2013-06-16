@@ -142,9 +142,9 @@ sub _fetch_deps_from_metadata {
 
     # FIXME it's poor!
     my @requires;
-    for my $prereq (values $json->{prereqs}) {
-        for my $modules (values $prereq) {
-            for my $require (keys $modules) {
+    for my $prereq (values %{$json->{prereqs}}) {
+        for my $modules (values %$prereq) {
+            for my $require (keys %$modules) {
                 push @requires, { module => $require };
             }
         }
