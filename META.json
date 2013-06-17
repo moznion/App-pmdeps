@@ -47,6 +47,7 @@
             "Getopt::Long" : "2.39",
             "JSON" : "2.59",
             "Module::CoreList" : "2.91",
+            "Term::ANSIColor" : "4.02",
             "perl" : "5.008001"
          }
       },

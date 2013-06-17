@@ -3,6 +3,7 @@ requires 'Furl',             '2.16';
 requires 'Getopt::Long',     '2.39';
 requires 'JSON',             '2.59';
 requires 'Module::CoreList', '2.91';
+requires 'Term::ANSIColor',  '4.02';
 
 on configure => sub {
     requires 'CPAN::Meta';
