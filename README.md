@@ -1,14 +1,14 @@
 # NAME
 
-App::pmdeps - It's new $module
+App::pmdeps - Fetch and show dependencies of CPAN module
 
-# SYNOPSIS
 
-    use App::pmdeps;
 
 # DESCRIPTION
 
-App::pmdeps is ...
+Please refer to the [pm-deps](http://search.cpan.org/perldoc?pm-deps).
+
+
 
 # LICENSE
 
@@ -16,6 +16,8 @@ Copyright (C) moznion.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
+
 
 # AUTHOR
 

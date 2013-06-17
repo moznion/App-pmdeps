@@ -196,7 +196,7 @@ Usage:
     pm-deps [options] Module [module_version]
 
     options:
-        -l,--local          TBD
+        -l,--local          Fetch dependencies from the local module
         -p,--perl-version   Set target perl version (default: perl version which you are using)
         -t,--timeout        Set seconds of the threshold for timeout (This application attempts to connect to metacpan)
         -h,--help           Show help messages. It's me!
@@ -224,15 +224,13 @@ __END__
 
 =head1 NAME
 
-App::pmdeps - It's new $module
+App::pmdeps - Fetch and show dependencies of CPAN module
 
-=head1 SYNOPSIS
-
-    use App::pmdeps;
 
 =head1 DESCRIPTION
 
-App::pmdeps is ...
+Please refer to the L<pm-deps>.
+
 
 =head1 LICENSE
 
@@ -240,6 +238,7 @@ Copyright (C) moznion.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
+
 
 =head1 AUTHOR
 

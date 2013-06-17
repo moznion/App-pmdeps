@@ -6,3 +6,62 @@ use utf8;
 use App::pmdeps;
 
 App::pmdeps->new->run(@ARGV);
+
+__END__
+
+=head1 NAME
+
+pm-deps - Fetch and show dependencies of CPAN module
+
+
+=head1 SYNOPSIS
+
+    # Fetch dependencies of the latest Acme
+    $ pm-deps Acme
+
+    # Fetch dependencies of Acme (version 1.11111)
+    $ pm-deps Acme 1.11111
+
+    # Fetch dependencies of the latest Acme with specifying the target perl version
+    $ pm-deps --perl-version=5.008009 Acme
+
+    # Fetch dependencies of local module (It refers META.json or MYMETA.json)
+    $ pm-deps --local=/path/to/your/awesome/module
+
+
+=head1 DESCRIPTION
+
+This script fetches dependencies of CPAN module, and show them.
+This application attempts to connect to metacpan to fetch dependencies.
+And you can extract dependency information from the module on your local environment.
+
+
+=head1 OPTIONS
+
+=over 4
+
+=item --local
+
+    --local=/path/to/your/awesome/module
+
+It extracts and shows the dependencies of the local module.
+It looks META.json or MYMETA.json (It gives priority to META.json).
+
+=item --perl-version
+
+    --perl-version=version
+
+It specifies the target perl version.
+
+=item --timeout
+
+    --timeout=seconds
+
+It specifies seconds of the threshold for timeout (This script attempts to connect to metacpan)
+
+=back
+
+
+=head1 AUTHOR
+
+moznion C<< moznion@gmail.com >>
