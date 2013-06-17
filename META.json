@@ -36,13 +36,13 @@
          "requires" : {
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion" : "0.10108",
+            "Test::Perl::Critic" : "0",
             "Test::Pod" : "1.41",
             "Test::Spellunker" : "v0.2.7"
          }
       },
       "runtime" : {
          "requires" : {
-            "Carp" : "0",
             "Furl" : "2.16",
             "Getopt::Long" : "2.39",
             "JSON" : "2.59",
