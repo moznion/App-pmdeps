@@ -61,13 +61,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/moznion/pm-deps/issues"
+         "web" : "https://github.com/moznion/App-pmdeps/issues"
       },
-      "homepage" : "https://github.com/moznion/pm-deps",
+      "homepage" : "https://github.com/moznion/App-pmdeps",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/moznion/pm-deps.git",
-         "web" : "https://github.com/moznion/pm-deps"
+         "url" : "git://github.com/moznion/App-pmdeps.git",
+         "web" : "https://github.com/moznion/App-pmdeps"
       }
    },
    "version" : "0.01",
