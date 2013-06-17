@@ -8,8 +8,11 @@ use Furl;
 use Getopt::Long qw/:config posix_default no_ignore_case bundling auto_help/;
 use JSON;
 use Module::CoreList;
+use Term::ANSIColor qw/colored/;
 
 our $VERSION = "0.01";
+
+$ENV{ANSI_COLORS_DISABLED} = 1 if $^O eq 'MSWin32';
 
 use constant METACPAN_API_URL => 'http://api.metacpan.org/v0/release/_search';
 
@@ -59,9 +62,9 @@ sub _spew {
     my $non_core_index   = $self->_make_index(scalar(@$non_cores), 'non-');
 
     print "Target: perl-$self->{perl_version}\n";
-    print "$core_index\n";
+    print colored['green'], "$core_index\n";
     print "\t$_\n" for (@$cores);
-    print "$non_core_index\n";
+    print colored['yellow'],  "$non_core_index\n";
     print "\t$_\n" for (@$non_cores);
 }
 
