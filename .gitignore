@@ -22,5 +22,7 @@ cover_db/
 !LICENSE
 
 MYMETA.*
+!t/resource/MYMETA.json
+!t/resource/mymeta_only/MYMETA.json
 
 /App-pmdeps-*
