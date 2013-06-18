@@ -11,6 +11,10 @@ use App::pmdeps;
 use Test::More;
 use Test::MockObject::Extends;
 
+BEGIN {
+    $ENV{ANSI_COLORS_DISABLED} = 1;
+}
+
 subtest 'remote' => sub {
     my $app = App::pmdeps->new;
     my $app_mock = Test::MockObject::Extends->new($app);

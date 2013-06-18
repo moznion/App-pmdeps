@@ -8,6 +8,10 @@ use App::pmdeps;
 
 use Test::More;
 
+BEGIN {
+    $ENV{ANSI_COLORS_DISABLED} = 1;
+}
+
 subtest 'Plack version 1.0027' => sub {
     subtest 'with perl-5.008001' => sub {
         my ($got) = capture {
