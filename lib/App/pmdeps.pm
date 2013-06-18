@@ -62,9 +62,11 @@ sub _spew {
     my $non_core_index   = $self->_make_index(scalar(@$non_cores), 'non-');
 
     print "Target: perl-$self->{perl_version}\n";
-    print colored['green'], "$core_index\n";
+    print colored['green'], "$core_index";
+    print "\n";
     print "\t$_\n" for (@$cores);
-    print colored['yellow'],  "$non_core_index\n";
+    print colored['yellow'],  "$non_core_index";
+    print "\n";
     print "\t$_\n" for (@$non_cores);
 }
 
