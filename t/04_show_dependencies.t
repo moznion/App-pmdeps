@@ -58,7 +58,7 @@ subtest 'local' => sub {
 
     subtest 'use meta_json' => sub {
         my ($got) = capture {
-            $app->run('-p', '5.008001', '-l', catfile($FindBin::Bin, 'resource'));
+            $app->run('-l', catfile($FindBin::Bin, 'resource'), '-p', '5.008001');
         };
         is $got, <<EOS;
 Target: perl-5.008001

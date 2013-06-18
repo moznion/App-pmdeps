@@ -28,15 +28,15 @@ sub run {
     GetOptions(
         't|timeout=i'      => \$self->{timeout},
         'p|perl-version=f' => \$self->{perl_version},
+        'l|local=s',       => \$self->{local},
         'h|help!'          => \$self->{usage},
-        'v|version'        => \$self->{version},
-        'l|local!',        => \$self->{local},
+        'v|version!'       => \$self->{version},
     ) or $self->show_usage;
 
     $self->show_version if $self->{version};
     $self->show_usage   if $self->{usage};
 
-    $self->show_short_usage unless @ARGV;
+    $self->show_short_usage unless ( @ARGV || $self->{local} );
 
     $self->{perl_version} ||= $];
     $self->show_dependencies(@ARGV);
@@ -46,26 +46,27 @@ sub show_dependencies {
     my ( $self, @args ) = @_;
 
     my $deps;
-    if ($self->{local}) {
-        $deps = $self->_fetch_deps_from_metadata($args[0]);
-    } else {
+    if ( $self->{local} ) {
+        $deps = $self->_fetch_deps_from_metadata( $self->{local} );
+    }
+    else {
         $deps = $self->_fetch_deps_from_metacpan( { name => $args[0], version => $args[1] } );
     }
-    my ($cores, $non_cores) = $self->_divide_core_or_not($deps);
-    $self->_spew($cores, $non_cores);
+    my ( $cores, $non_cores ) = $self->_divide_core_or_not($deps);
+    $self->_spew( $cores, $non_cores );
 }
 
 sub _spew {
     my ( $self, $cores, $non_cores ) = @_;
 
-    my $core_index       = $self->_make_index(scalar(@$cores));
-    my $non_core_index   = $self->_make_index(scalar(@$non_cores), 'non-');
+    my $core_index     = $self->_make_index( scalar(@$cores) );
+    my $non_core_index = $self->_make_index( scalar(@$non_cores), 'non-' );
 
     print "Target: perl-$self->{perl_version}\n";
     print colored['green'], "$core_index";
     print "\n";
     print "\t$_\n" for (@$cores);
-    print colored['yellow'],  "$non_core_index";
+    print colored['yellow'], "$non_core_index";
     print "\n";
     print "\t$_\n" for (@$non_cores);
 }
@@ -75,11 +76,11 @@ sub _make_index {
 
     $optional ||= '';
     my $index = "Depends on $num " . $optional . "core modules:";
-    if ($num == 1) {
+    if ( $num == 1 ) {
         $index =~ s/modules/module/;
     }
     unless ($num) {
-        $index = "Depends on no " . $optional . "core module."
+        $index = "Depends on no " . $optional . "core module.";
     }
 
     return $index;
@@ -145,20 +146,17 @@ sub _fetch_deps_from_metadata {
     my $json = decode_json(<$fh>);
     close $fh;
 
-    # FIXME it's poor!
     my @requires;
-    for my $prereq (values %{$json->{prereqs}}) {
-        for my $modules (values %$prereq) {
-            for my $require (keys %$modules) {
-                push @requires, { module => $require };
-            }
-        }
+    my @prereqs = values %{ $json->{prereqs} };
+    my @modules = map { keys %$_ } map { values %$_ } @prereqs;
+    for my $module ( @modules ) {
+        push @requires, { module => $module };
     }
     return \@requires;
 }
 
 sub _divide_core_or_not {
-    my ($self, $deps) = @_;
+    my ( $self, $deps ) = @_;
 
     my ( @cores, @non_cores );
 
@@ -178,7 +176,7 @@ sub _divide_core_or_not {
     @cores     = sort { $a cmp $b } $self->_unique(@cores);
     @non_cores = sort { $a cmp $b } $self->_unique(@non_cores);
 
-    return (\@cores, \@non_cores);
+    return ( \@cores, \@non_cores );
 }
 
 sub show_version {
