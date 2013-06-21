@@ -29,12 +29,17 @@ sub run {
         't|timeout=i'      => \$self->{timeout},
         'p|perl-version=f' => \$self->{perl_version},
         'l|local=s',       => \$self->{local},
+        'w|without=s@'     => \$self->{without},
         'h|help!'          => \$self->{usage},
         'v|version!'       => \$self->{version},
     ) or $self->show_usage;
 
     $self->show_version if $self->{version};
     $self->show_usage   if $self->{usage};
+
+    if ($self->{without}) {
+        @{$self->{without}} = split( /,/, join(',', @{$self->{without}}) );
+    }
 
     $self->show_short_usage unless ( @ARGV || $self->{local} );
 
@@ -122,7 +127,12 @@ sub _fetch_deps_from_metacpan {
 EOQ
 
     my $content = decode_json( $res->{content} );
-    return $content->{hits}->{hits}[0]->{fields}->{dependency};
+    my @deps    = @{$content->{hits}->{hits}[0]->{fields}->{dependency}}; # TODO remove
+    for my $without (@{$self->{without}}) {
+        @deps = grep { $_->{phase} ne $without } @deps;
+    }
+
+    return \@deps;
 }
 
 sub _fetch_deps_from_metadata {
