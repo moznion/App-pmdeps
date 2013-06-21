@@ -26,19 +26,19 @@ sub run {
 
     local @ARGV = @args;
     GetOptions(
-        't|timeout=i'      => \$self->{timeout},
-        'p|perl-version=f' => \$self->{perl_version},
-        'l|local=s',       => \$self->{local},
-        'w|without=s@'     => \$self->{without},
-        'h|help!'          => \$self->{usage},
-        'v|version!'       => \$self->{version},
+        't|timeout=i'         => \$self->{timeout},
+        'p|perl-version=f'    => \$self->{perl_version},
+        'l|local=s',          => \$self->{local},
+        'without-phase=s@' => \$self->{without_phase},
+        'h|help!'             => \$self->{usage},
+        'v|version!'          => \$self->{version},
     ) or $self->show_usage;
 
     $self->show_version if $self->{version};
     $self->show_usage   if $self->{usage};
 
-    if ($self->{without}) {
-        @{$self->{without}} = split( /,/, join(',', @{$self->{without}}) );
+    if ($self->{without_phase}) {
+        @{$self->{without_phase}} = split( /,/, join(',', @{$self->{without_phase}}) );
     }
 
     $self->show_short_usage unless ( @ARGV || $self->{local} );
@@ -128,8 +128,8 @@ EOQ
 
     my $content = decode_json( $res->{content} );
     my @deps    = @{$content->{hits}->{hits}[0]->{fields}->{dependency}};
-    for my $without (@{$self->{without}}) {
-        @deps = grep { $_->{phase} ne $without } @deps;
+    for my $phase (@{$self->{without_phase}}) {
+        @deps = grep { $_->{phase} ne $phase } @deps;
     }
 
     return \@deps;
@@ -158,7 +158,7 @@ sub _fetch_deps_from_metadata {
 
     my @prereqs;
     for my $phase ( keys %{ $json->{prereqs} } ) {
-        unless ( grep { $phase eq $_ } @{ $self->{without} } ) {
+        unless ( grep { $phase eq $_ } @{ $self->{without_phase} } ) {
             push @prereqs, $json->{prereqs}->{$phase};
         }
     }

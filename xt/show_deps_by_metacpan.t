@@ -103,7 +103,7 @@ EOS
         };
         subtest 'without something' => sub {
             my ($got) = capture {
-                App::pmdeps->new->run( '-p', '5.016003', '-w', 'configure,develop,test', 'Plack', '1.0027' );
+                App::pmdeps->new->run( '-p', '5.016003', '--without-phase', 'configure,develop,test', 'Plack', '1.0027' );
             };
 
             is $got, <<EOS;

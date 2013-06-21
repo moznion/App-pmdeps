@@ -75,7 +75,7 @@ EOS
 
         subtest 'without some phases' => sub {
             my ($got) = capture {
-                App::pmdeps->new->run('-l', catfile($FindBin::Bin, 'resource'), '-p', '5.008001', '--without', 'configure,develop');
+                App::pmdeps->new->run('-l', catfile($FindBin::Bin, 'resource'), '-p', '5.008001', '--without-phase', 'configure,develop');
             };
             is $got, <<EOS;
 Target: perl-5.008001
@@ -109,7 +109,7 @@ EOS
 
         subtest 'without some phases' => sub {
             my ($got) = capture {
-                App::pmdeps->new->run('-p', '5.008001', '--local', catfile($FindBin::Bin, 'resource', 'mymeta_only'), '-w', 'configure,develop');
+                App::pmdeps->new->run('-p', '5.008001', '--local', catfile($FindBin::Bin, 'resource', 'mymeta_only'), '--without-phase', 'configure,develop');
             };
             is $got, <<EOS;
 Target: perl-5.008001
