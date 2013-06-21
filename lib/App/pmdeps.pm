@@ -127,7 +127,7 @@ sub _fetch_deps_from_metacpan {
 EOQ
 
     my $content = decode_json( $res->{content} );
-    my @deps    = @{$content->{hits}->{hits}[0]->{fields}->{dependency}}; # TODO remove
+    my @deps    = @{$content->{hits}->{hits}[0]->{fields}->{dependency}};
     for my $without (@{$self->{without}}) {
         @deps = grep { $_->{phase} ne $without } @deps;
     }
@@ -156,8 +156,14 @@ sub _fetch_deps_from_metadata {
     my $json = decode_json(<$fh>);
     close $fh;
 
+    my @prereqs;
+    for my $phase ( keys %{ $json->{prereqs} } ) {
+        unless ( grep { $phase eq $_ } @{ $self->{without} } ) {
+            push @prereqs, $json->{prereqs}->{$phase};
+        }
+    }
+
     my @requires;
-    my @prereqs = values %{ $json->{prereqs} };
     my @modules = map { keys %$_ } map { values %$_ } @prereqs;
     for my $module ( @modules ) {
         push @requires, { module => $module };
