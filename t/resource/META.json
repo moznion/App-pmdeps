@@ -34,6 +34,16 @@
             "Module::CoreList" : "2.91",
             "perl" : "5.008001"
          }
+      },
+      "configure" : {
+         "requires" : {
+             "Module::Build" : "0.4005"
+         }
+      },
+      "develop" : {
+         "requires" : {
+             "Test::Perl::Critic" : "0.4005"
+         }
       }
    },
    "release_status" : "unstable",

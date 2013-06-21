@@ -65,10 +65,12 @@ Target: perl-5.008001
 Depends on 2 core modules:
 \tCarp
 \tGetopt::Long
-Depends on 3 non-core modules:
+Depends on 5 non-core modules:
 \tFurl
 \tJSON
+\tModule::Build
 \tModule::CoreList
+\tTest::Perl::Critic
 EOS
     };
 
@@ -80,9 +82,11 @@ EOS
 Target: perl-5.008001
 Depends on 1 core module:
 \tCarp
-Depends on 2 non-core modules:
+Depends on 4 non-core modules:
 \tFurl
 \tJSON
+\tModule::Build
+\tTest::Perl::Critic
 EOS
     };
 

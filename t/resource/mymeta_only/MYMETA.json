@@ -32,6 +32,16 @@
             "JSON" : "2.59",
             "perl" : "5.008001"
          }
+      },
+      "configure" : {
+         "requires" : {
+             "Module::Build" : "0.4005"
+         }
+      },
+      "develop" : {
+         "requires" : {
+             "Test::Perl::Critic" : "0.4005"
+         }
       }
    },
    "provides" : {
