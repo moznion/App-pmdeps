@@ -28,6 +28,12 @@ pm-deps - Fetch and show dependencies of CPAN module
     # Fetch dependencies of local module (It refers META.json or MYMETA.json)
     $ pm-deps --local /path/to/your/awesome/module
 
+    # Fetch dependencies without specified phases.
+    $ pm-deps --without-phase configure,develop Acme # <= ignore dependencies of `configure` and `develop` phases.
+
+    # Fetch dependencies without specified types.
+    $ pm-deps --without-type recommends,suggests Acme # <= ignore dependencies of `recommends` and `suggests` types.
+
 
 =head1 DESCRIPTION
 
@@ -52,6 +58,18 @@ It looks META.json or MYMETA.json (It gives priority to META.json).
     --perl-version version
 
 It specifies the target perl version.
+
+=item --without-phase
+
+    --without-phase phase
+
+It ignores specified phases (e.g. configure, develop, etc...).
+
+=item --without-type
+
+    --without-type type
+
+It ignores specified types (e.g. requires, recommends, etc...).
 
 =item --timeout
 
