@@ -10,7 +10,7 @@ use JSON;
 use Module::CoreList;
 use Term::ANSIColor qw/colored/;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 $ENV{ANSI_COLORS_DISABLED} = 1 if $^O eq 'MSWin32';
 
