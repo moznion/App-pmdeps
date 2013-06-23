@@ -136,6 +136,9 @@ EOQ
     for my $phase (@{$self->{without_phase}}) {
         @deps = grep { $_->{phase} ne $phase } @deps;
     }
+    for my $type (@{$self->{without_type}}) {
+        @deps = grep { $_->{relationship} ne $type } @deps;
+    }
 
     return \@deps;
 }

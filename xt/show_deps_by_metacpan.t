@@ -101,7 +101,7 @@ Depends on 27 non-core modules:
 \tURI
 EOS
         };
-        subtest 'without something' => sub {
+        subtest 'without some phases' => sub {
             my ($got) = capture {
                 App::pmdeps->new->run( '-p', '5.016003', '--without-phase', 'configure,develop,test', 'Plack', '1.0027' );
             };
@@ -128,6 +128,37 @@ Depends on 18 non-core modules:
 \tIO::Handle::Util
 \tLWP::UserAgent
 \tStream::Buffered
+\tTest::TCP
+\tTry::Tiny
+\tURI
+EOS
+        };
+        subtest 'without some type' => sub {
+            my ($got) = capture {
+                App::pmdeps->new->run( '-p', '5.016003', '--without-type', 'suggests,recommends', 'Plack', '1.0027' );
+            };
+
+            is $got, <<EOS;
+Target: perl-5.016003
+Depends on 5 core modules:
+\tExtUtils::MakeMaker
+\tHTTP::Tiny
+\tPod::Usage
+\tTest::More
+\tparent
+Depends on 15 non-core modules:
+\tApache::LogFormat::Compiler
+\tDevel::StackTrace
+\tDevel::StackTrace::AsHTML
+\tFile::ShareDir
+\tFile::ShareDir::Install
+\tFilesys::Notify::Simple
+\tHTTP::Body
+\tHTTP::Message
+\tHash::MultiValue
+\tStream::Buffered
+\tTest::Pod
+\tTest::Requires
 \tTest::TCP
 \tTry::Tiny
 \tURI
