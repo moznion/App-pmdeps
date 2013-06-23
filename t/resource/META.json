@@ -33,11 +33,20 @@
             "JSON" : "2.59",
             "Module::CoreList" : "2.91",
             "perl" : "5.008001"
+         },
+         "recommends" : {
+             "Acme" : "0"
+         },
+         "suggests" : {
+             "Acme::Anything" : "0"
          }
       },
       "configure" : {
          "requires" : {
              "Module::Build" : "0.4005"
+         },
+         "suggests" : {
+             "Acme::Buffy" : "0"
          }
       },
       "develop" : {

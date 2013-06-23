@@ -26,12 +26,13 @@ sub run {
 
     local @ARGV = @args;
     GetOptions(
-        't|timeout=i'         => \$self->{timeout},
-        'p|perl-version=f'    => \$self->{perl_version},
-        'l|local=s',          => \$self->{local},
+        't|timeout=i'      => \$self->{timeout},
+        'p|perl-version=f' => \$self->{perl_version},
+        'l|local=s',       => \$self->{local},
         'without-phase=s@' => \$self->{without_phase},
-        'h|help!'             => \$self->{usage},
-        'v|version!'          => \$self->{version},
+        'without-type=s@'  => \$self->{without_type},
+        'h|help!'          => \$self->{usage},
+        'v|version!'       => \$self->{version},
     ) or $self->show_usage;
 
     $self->show_version if $self->{version};
@@ -39,6 +40,10 @@ sub run {
 
     if ($self->{without_phase}) {
         @{$self->{without_phase}} = split( /,/, join(',', @{$self->{without_phase}}) );
+    }
+
+    if ($self->{without_type}) {
+        @{$self->{without_type}} = split( /,/, join(',', @{$self->{without_type}}) );
     }
 
     $self->show_short_usage unless ( @ARGV || $self->{local} );
@@ -160,6 +165,12 @@ sub _fetch_deps_from_metadata {
     for my $phase ( keys %{ $json->{prereqs} } ) {
         unless ( grep { $phase eq $_ } @{ $self->{without_phase} } ) {
             push @prereqs, $json->{prereqs}->{$phase};
+        }
+    }
+
+    for my $prereq (@prereqs) {
+        for my $type ( @{ $self->{without_type} } ) {
+            delete $prereq->{$type};
         }
     }
 
