@@ -9,6 +9,7 @@ use Getopt::Long qw/:config posix_default no_ignore_case bundling auto_help/;
 use JSON;
 use Module::CoreList;
 use Term::ANSIColor qw/colored/;
+use IO::Handle;
 
 our $VERSION = "0.02";
 
@@ -210,12 +211,12 @@ sub _divide_core_or_not {
 }
 
 sub show_version {
-    _print_immediately("pm-deps (App::pmdeps): v$VERSION");
+    STDOUT->printflush("pm-deps (App::pmdeps): v$VERSION");
     die "\n";
 }
 
 sub show_short_usage {
-    _print_immediately(<<EOU);
+    STDOUT->printflush(<<EOU);
 Usage: pm-deps [options] Module [module_version]
 
 Try `pm-deps --help` to get more information.
@@ -224,7 +225,7 @@ EOU
 }
 
 sub show_usage {
-    _print_immediately(<<EOU);
+    STDOUT->printflush(<<EOU);
 Usage:
     pm-deps [options] Module [module_version]
 
@@ -236,13 +237,6 @@ Usage:
         -v,--version        Show version of this application
 EOU
     die "\n";
-}
-
-sub _print_immediately {
-    my $msg = shift;
-    $| = 1;    # flush
-    print $msg;
-    $| = 0;    # no flush
 }
 
 sub _unique {
