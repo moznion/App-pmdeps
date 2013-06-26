@@ -160,10 +160,11 @@ sub _fetch_deps_from_metadata {
         croak '[ERROR] META.json or MYMETA.json is not found.';
     }
 
-    local $/;
-    open my $fh, '<', $using_json_file;
-    my $json = decode_json(<$fh>);
-    close $fh;
+    my $json = do {
+        local $/;
+        open my $fh, '<', $using_json_file or die $!;
+        decode_json(<$fh>);
+    };
 
     my @prereqs;
     for my $phase ( keys %{ $json->{prereqs} } ) {
